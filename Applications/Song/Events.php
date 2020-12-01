@@ -21,7 +21,6 @@
 //declare(ticks=1);
 
 use \GatewayWorker\Lib\Gateway;
-use \GatewayWorker\Lib\Db;
 
 /**
  * 主逻辑
@@ -30,6 +29,19 @@ use \GatewayWorker\Lib\Db;
  */
 class Events
 {
+    public static function onWorkerStart($worker)
+    {
+        if ($worker->name == "SongBusinessWorker") {
+            \Workerman\Timer::add(1, function () {
+                $song = \Conlink\Song::taskSong();
+                if ($song) {
+                    $song = json_encode($song, JSON_UNESCAPED_UNICODE);
+                    Gateway::sendToAll($song);
+                }
+
+            });
+        }
+    }
 
 
     /**
