@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+</head>
+<body>
+<!--<audio src="song/11.mp3" id="music" autoplay controls></audio>-->
+<audio src="" id="musicControl" autoplay controls ></audio>
+
+<!--<audio src="" id="addd" autoplay controls muted></audio>-->
+
+<div id="linkweb" onclick="connect()">连接服务器</div>
+<div id="lrcs">
+</div>
+</body>
+<script src="js/jquery.js"></script>
+<script>
+    // 配置
+    // var ws_hostname = 'ws://'+self.location.hostname+':811/';
+    var ws_hostname = 'ws://127.0.0.1:8282'
+    var websocket
+    var ws_connected = false
+
+    function connect() {
+        websocket = new WebSocket(ws_hostname)
+        websocket.onopen = function (event) {
+            ws_connected = true
+            // websocket.send('{"type":"msg","data":"test"}')
+        }
+        websocket.onmessage = function (event) {
+            handle(event.data)
+            // console.log(event.data)
+        }
+        websocket.onclose = function (event) {
+            ws_connected = false
+        }
+        websocket.onerror = function (event, e) {
+            ws_connected = false;
+        }
+    }
+
+    function music(data) {
+        musicControl.src = data.song
+        musicControl.currentTime = data.current
+        // addd.src = 'song/11.mp3'
+        // lrcs.innerHTML = data.lrc
+        // musicControl.load();
+        // musicControl.play();
+
+        // console.log(data.song)
+    }
+
+    function handle(data) {
+        var json = JSON.parse(data);
+        // console.log(json)
+        if (json.type != undefined) {
+            switch (json.type) {
+                case"music":
+                    music(json)
+                    break;
+            }
+        }
+    }
+
+
+    document.onreadystatechange = function () {
+        if (document.readyState == "complete") {
+            //心跳
+            setInterval(function () {
+                if (ws_connected) {
+                    websocket.send('{"type":"pong","data":"ping"}')
+                }
+            }, 5000)
+        }
+    }
+
+    // 解析 Lrc 格式歌词
+    function parseLyric(text) {
+        var lyrics = text.split("\n");
+        var lrcObj = {};
+        for (var i = 0; i < lyrics.length; i++) {
+            var lyric = decodeURIComponent(lyrics[i]);
+            var timeReg = /\[\d*:\d*((\.|\:)\d*)*\]/g;
+            var timeRegExpArr = lyric.match(timeReg);
+            if (!timeRegExpArr) continue;
+            var clause = lyric.replace(timeReg, '');
+            for (var k = 0, h = timeRegExpArr.length; k < h; k++) {
+                var t = timeRegExpArr[k];
+                var min = Number(String(t.match(/\[\d*/i)).slice(1)),
+                    sec = Number(String(t.match(/\:\d*/i)).slice(1));
+                var time = min * 60 + sec;
+                lrcObj[time] = clause;
+            }
+        }
+        return lrcObj;
+    }
+
+    var lrc = "[ti:体面]\t\n" +
+        "[ar:于文文]\t\n" +
+        "[al:电影《前任3：再见前任》插曲]\t\n" +
+        "[by:果果1314]\t\n" +
+        "\n" +
+        "[00:00.00]于文文 - 体面\n" +
+        "[00:02.00]电影《前任3：再见前任》插曲\n" +
+        "[00:04.00]作词：唐恬\n" +
+        "[00:06.00]作曲：于文文\n" +
+        "[00:08.00]演唱：于文文\n" +
+        "[00:10.00]编曲：郑楠\n" +
+        "[00:12.00]和声&和声设计：于文文\n" +
+        "[00:14.00]]歌词编辑：果果\n" +
+        "[00:16.00]QQ:765708831\n" +
+        "[00:18.00]爱歌词网：www.22lrc.com\n" +
+        "[00:20.00]\n" +
+        "[00:23.00]别堆砌怀念让剧情变得狗血\n" +
+        "[00:34.03]深爱了多年又何必毁了经典\n" +
+        "[00:42.92]都已成年不拖不欠\n" +
+        "[00:48.67]浪费时间是我情愿\n" +
+        "[00:54.28]像谢幕的演员\n" +
+        "[00:57.79]眼看着灯光熄灭\n" +
+        "[01:05.43]来不及再轰轰烈烈\n" +
+        "[01:11.15]就保留告别的尊严\n" +
+        "[01:16.79]我爱你不后悔\n" +
+        "[01:20.36]也尊重故事结尾\n" +
+        "[01:28.13]分手应该体面\n" +
+        "[01:31.39]谁都不要说抱歉\n" +
+        "[01:35.06]何来亏欠\n" +
+        "[01:37.23]我敢给就敢心碎\n" +
+        "[01:40.83]镜头前面是\n" +
+        "[01:42.99]从前的我们在喝彩\n" +
+        "[01:47.15]流着泪声嘶力竭\n" +
+        "[01:50.83]离开也很体面\n" +
+        "[01:53.86]才没辜负这些年\n" +
+        "[01:57.62]爱得热烈\n" +
+        "[01:59.51]认真付出的画面\n" +
+        "[02:03.33]别让执念毁掉了昨天\n" +
+        "[02:07.99]我爱过你利落干脆\n" +
+        "[02:12.48]\n" +
+        "[02:35.42]最熟悉的街主角却换了人演\n" +
+        "[02:46.95]我哭到哽咽\n" +
+        "[02:48.99]心再痛就当破茧\n" +
+        "[02:55.73]来不及再轰轰烈烈\n" +
+        "[03:01.35]就保留告别的尊严\n" +
+        "[03:06.99]我爱你不后悔\n" +
+        "[03:10.92]也尊重故事结尾\n" +
+        "[03:18.39]分手应该体面\n" +
+        "[03:21.52]谁都不要说抱歉\n" +
+        "[03:25.31]何来亏欠\n" +
+        "[03:27.12]我敢给就敢心碎\n" +
+        "[03:30.88]镜头前面是\n" +
+        "[03:33.13]从前的我们在喝彩\n" +
+        "[03:36.83]流着泪声嘶力竭\n" +
+        "[03:41.01]离开也很体面\n" +
+        "[03:43.92]才没辜负这些年爱得热烈\n" +
+        "[03:49.79]认真付出的画面\n" +
+        "[03:53.54]别让执念毁掉了昨天\n" +
+        "[03:58.26]我爱过你利落干脆\n" +
+        "[04:04.20]再见不负遇见\n" +
+        "[04:11.08]\n" +
+        "[10:00.00]LRC歌词下载：www.22lrc.com \n"
+
+
+    // var tt = parseLyric(lrc)
+    // console.log(tt)
+</script>
+</html>

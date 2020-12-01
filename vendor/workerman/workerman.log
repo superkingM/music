@@ -1,0 +1,95 @@
+2020-11-30 08:16:55 pid:1 Exception: You can't send(array) to client, you need to convert it to a string.  in C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Protocols\Websocket.php:236
+Stack trace:
+#0 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Connection\TcpConnection.php(344): Workerman\Protocols\Websocket::encode(Array, Object(Workerman\Connection\TcpConnection))
+#1 C:\Users\chaow\Downloads\music\vendor\workerman\gateway-worker\src\Gateway.php(578): Workerman\Connection\TcpConnection->send(Array)
+#2 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Connection\TcpConnection.php(660): GatewayWorker\Gateway->onWorkerMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Events\Select.php(293): Workerman\Connection\TcpConnection->baseRead(Resource id #34)
+#4 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#5 C:\Users\chaow\Downloads\music\vendor\workerman\gateway-worker\src\Gateway.php(276): Workerman\Worker->run()
+#6 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\Gateway->run()
+#7 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#8 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#9 C:\Users\chaow\Downloads\music\Applications\Song\start_gateway.php(63): Workerman\Worker::runAll()
+#10 {main}
+2020-11-30 08:16:55 pid:1 Worker process terminated
+2020-11-30 08:16:57 pid:1 Exception: You can't send(array) to client, you need to convert it to a string.  in C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Protocols\Websocket.php:236
+Stack trace:
+#0 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Connection\TcpConnection.php(344): Workerman\Protocols\Websocket::encode(Array, Object(Workerman\Connection\TcpConnection))
+#1 C:\Users\chaow\Downloads\music\vendor\workerman\gateway-worker\src\Gateway.php(578): Workerman\Connection\TcpConnection->send(Array)
+#2 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Connection\TcpConnection.php(660): GatewayWorker\Gateway->onWorkerMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Events\Select.php(293): Workerman\Connection\TcpConnection->baseRead(Resource id #34)
+#4 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#5 C:\Users\chaow\Downloads\music\vendor\workerman\gateway-worker\src\Gateway.php(276): Workerman\Worker->run()
+#6 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\Gateway->run()
+#7 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#8 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#9 C:\Users\chaow\Downloads\music\Applications\Song\start_gateway.php(63): Workerman\Worker::runAll()
+#10 {main}
+2020-11-30 08:16:57 pid:1 Worker process terminated
+2020-12-01 06:13:25 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2020-12-01 06:13:25 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2020-12-01 06:13:29 pid:1 Register auth timeout (127.0.0.1). See http://doc2.workerman.net/register-auth-timeout.html
+2020-12-01 06:13:31 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2020-12-01 06:13:31 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2020-12-01 06:13:42 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2020-12-01 06:13:42 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2020-12-01 06:50:32 pid:1 Error: Call to a member function single() on null in C:\Users\chaow\Downloads\music\Applications\Song\Conlink\Song.php:25
+Stack trace:
+#0 C:\Users\chaow\Downloads\music\Applications\Song\Events.php(56): Conlink\Song::open()
+#1 [internal function]: Events::onConnect('7f0000010b54000...')
+#2 C:\Users\chaow\Downloads\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(399): call_user_func('Events::onConne...', '7f0000010b54000...')
+#3 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Connection\TcpConnection.php(660): GatewayWorker\BusinessWorker->onGatewayMessage(Object(Workerman\Connection\AsyncTcpConnection), Array)
+#4 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Events\Select.php(293): Workerman\Connection\TcpConnection->baseRead(Resource id #28)
+#5 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#6 C:\Users\chaow\Downloads\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#7 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#8 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#9 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#10 C:\Users\chaow\Downloads\music\Applications\Song\start_businessworker.php(35): Workerman\Worker::runAll()
+#11 {main}
+2020-12-01 06:50:32 pid:1 Worker process terminated
+2020-12-01 06:52:24 pid:1 Error: Call to a member function query() on null in C:\Users\chaow\Downloads\music\Applications\Song\Conlink\Song.php:25
+Stack trace:
+#0 C:\Users\chaow\Downloads\music\Applications\Song\Events.php(56): Conlink\Song::open()
+#1 [internal function]: Events::onConnect('7f0000010b54000...')
+#2 C:\Users\chaow\Downloads\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(399): call_user_func('Events::onConne...', '7f0000010b54000...')
+#3 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Connection\TcpConnection.php(660): GatewayWorker\BusinessWorker->onGatewayMessage(Object(Workerman\Connection\AsyncTcpConnection), Array)
+#4 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Events\Select.php(293): Workerman\Connection\TcpConnection->baseRead(Resource id #28)
+#5 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#6 C:\Users\chaow\Downloads\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#7 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#8 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#9 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#10 C:\Users\chaow\Downloads\music\Applications\Song\start_businessworker.php(35): Workerman\Worker::runAll()
+#11 {main}
+2020-12-01 06:52:24 pid:1 Worker process terminated
+2020-12-01 06:54:33 pid:1 Error: Call to a member function select() on null in C:\Users\chaow\Downloads\music\Applications\Song\Conlink\Song.php:25
+Stack trace:
+#0 C:\Users\chaow\Downloads\music\Applications\Song\Events.php(56): Conlink\Song::open()
+#1 [internal function]: Events::onConnect('7f0000010b54000...')
+#2 C:\Users\chaow\Downloads\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(399): call_user_func('Events::onConne...', '7f0000010b54000...')
+#3 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Connection\TcpConnection.php(660): GatewayWorker\BusinessWorker->onGatewayMessage(Object(Workerman\Connection\AsyncTcpConnection), Array)
+#4 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Events\Select.php(293): Workerman\Connection\TcpConnection->baseRead(Resource id #28)
+#5 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#6 C:\Users\chaow\Downloads\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#7 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#8 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#9 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#10 C:\Users\chaow\Downloads\music\Applications\Song\start_businessworker.php(35): Workerman\Worker::runAll()
+#11 {main}
+2020-12-01 06:54:33 pid:1 Worker process terminated
+2020-12-01 06:56:00 pid:1 Error: Call to a member function query() on null in C:\Users\chaow\Downloads\music\Applications\Song\Conlink\Song.php:25
+Stack trace:
+#0 C:\Users\chaow\Downloads\music\Applications\Song\Events.php(56): Conlink\Song::open()
+#1 [internal function]: Events::onConnect('7f0000010b54000...')
+#2 C:\Users\chaow\Downloads\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(399): call_user_func('Events::onConne...', '7f0000010b54000...')
+#3 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Connection\TcpConnection.php(660): GatewayWorker\BusinessWorker->onGatewayMessage(Object(Workerman\Connection\AsyncTcpConnection), Array)
+#4 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Events\Select.php(293): Workerman\Connection\TcpConnection->baseRead(Resource id #28)
+#5 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#6 C:\Users\chaow\Downloads\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#7 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#8 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#9 C:\Users\chaow\Downloads\music\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#10 C:\Users\chaow\Downloads\music\Applications\Song\start_businessworker.php(35): Workerman\Worker::runAll()
+#11 {main}
+2020-12-01 06:56:00 pid:1 Worker process terminated

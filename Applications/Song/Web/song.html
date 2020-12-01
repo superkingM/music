@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <title>测试</title>
+</head>
+<body style="background-color:#263238">
+<div id="welcome"
+     style="position: fixed;width: 100%;height: 100%;top: 0px;left: 0px;z-index: 9999999;background: #263238;">
+        <span class="glyphicon glyphicon-play-circle"
+              style="font-size: 200px;position: fixed;top: calc(50% - 64px);left: calc(50% - 100px);cursor:pointer;color: #5bc0de"
+              onclick="connect();$('#welcome').fadeOut();">
+        </span>
+</div>
+<div class="container" style="margin-top: 100px">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-4" style="display: none;">
+                <img src="pic/pic.jpg" id="musicpic" title="点击静音/取消静音" onclick="setPause()"
+                     style="cursor:pointer;transition-duration:0.2s;width: 90%;padding: 4px;border: 32px solid #151515;border-radius: 50%;background: rgb(191, 20, 20);margin-top: 5%;margin-left:5%;box-shadow:0px 0px 8px #000;"/>
+            </div>
+            <div class="col-md-8">
+                <div class="progress" style="height: 2px">
+                    <div id="played" class="progress-bar" role="progressbar" aria-valuemax="100"
+                         style="width: 90%;height: 2px">
+                    </div>
+                </div>
+                <div style="color: #ffffff;display: inline"><span id="usedtime" style="left: 0"></span></div>
+                <div style="color: #ffffff;display: inline"><span id="endtime"
+                                                                  style="position: absolute;right: 10px"></span></div>
+                <!--<div style="color: #9acfea;font-weight: bold"><span>歌名：</span><span id="songname"></span></div>-->
+                <!--<div style="color: #9acfea;font-weight: bold;"><span>歌词：</span><span id="musiclrc"></span></div>-->
+            </div>
+        </div>
+        <div class="col-md-6">456</div>
+    </div>
+    <audio src="" id="musicControl" autoplay></audio>
+    <!--style="width: 0px;height: 0px;opacity: 0;"-->
+</div>
+</body>
+<script src="js/jquery.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>
+<script>
+    var ws_hostname = 'ws://127.0.0.1:8282'
+    var websocket
+    var ws_connected = false
+    var paused = false
+    var rotate = 0;
+    var lrcObj = {};
+
+    function connect() {
+        websocket = new WebSocket(ws_hostname)
+        websocket.onopen = function (event) {
+            ws_connected = true
+            // websocket.send('{"type":"msg","data":"test"}')
+        }
+        websocket.onmessage = function (event) {
+            handle(event.data)
+            // console.log(event.data)
+        }
+        websocket.onclose = function (event) {
+            ws_connected = false
+        }
+        websocket.onerror = function (event, e) {
+            ws_connected = false;
+        }
+    }
+
+    function music(data) {
+        musicControl.src = data.url
+        // document.title = data.name
+        rotate = 0
+        musicControl.pause()
+        // songname.innerHTML = data.name
+        musicControl.currentTime = data.current+1
+        // lrcObj = parseLyric(data.lrc)
+        setTimeout(function () {
+            musicControl.play()
+        }, 1000)
+
+
+    }
+
+    function handle(data) {
+        var json = JSON.parse(data);
+        if (json.type != undefined) {
+            switch (json.type) {
+                case"music":
+                    music(json)
+                    break;
+            }
+        }
+    }
+
+    // 转换时间格式
+    function formatSeconds(value) {
+        if (value == null || value == undefined) value = 0;
+        var secondTime = parseInt(value);
+        var minuteTime = 0;
+        var hourTime = 0;
+        if (secondTime > 60) {
+            minuteTime = parseInt(secondTime / 60);
+            secondTime = parseInt(secondTime % 60);
+            if (minuteTime > 60) {
+                hourTime = parseInt(minuteTime / 60);
+                minuteTime = parseInt(minuteTime % 60);
+            }
+        }
+        secondTime = parseInt(secondTime);
+        minuteTime = parseInt(minuteTime);
+        hourTime = parseInt(hourTime);
+        if (secondTime < 10) secondTime = "0" + parseInt(secondTime);
+        if (minuteTime < 10) minuteTime = "0" + parseInt(minuteTime);
+        if (hourTime < 10) hourTime = "0" + parseInt(hourTime);
+        return hourTime + ":" + minuteTime + ":" + secondTime;
+    }
+
+    // 解析 Lrc 格式歌词
+    function parseLyric(text) {
+        var lyrics = text.split("\n");
+        var lrcObj = {};
+        for (var i = 0; i < lyrics.length; i++) {
+            var lyric = decodeURIComponent(lyrics[i]);
+            var timeReg = /\[\d*:\d*((\.|\:)\d*)*\]/g;
+            var timeRegExpArr = lyric.match(timeReg);
+            if (!timeRegExpArr) continue;
+            var clause = lyric.replace(timeReg, '');
+            for (var k = 0, h = timeRegExpArr.length; k < h; k++) {
+                var t = timeRegExpArr[k];
+                var min = Number(String(t.match(/\[\d*/i)).slice(1)),
+                    sec = Number(String(t.match(/\:\d*/i)).slice(1));
+                var time = min * 60 + sec;
+                lrcObj[time] = clause;
+            }
+        }
+        return lrcObj;
+    }
+
+    document.onreadystatechange = function () {
+        if (document.readyState == 'complete') {
+            //封面旋转
+            setInterval(function () {
+                if (!paused) {
+                    rotate = rotate + 1;
+                    musicpic.style.transform = "rotate(" + rotate + "deg)";
+                }
+
+            }, 100);
+            //歌曲时间
+            setInterval(function () {
+                played.style.width = ((musicControl.currentTime / musicControl.duration) * 100) + "%";
+                usedtime.innerText = formatSeconds(musicControl.currentTime);
+                endtime.innerText = formatSeconds(musicControl.duration - musicControl.currentTime);
+            }, 100);
+            //歌词
+            setInterval(function () {
+                var curTime = musicControl.currentTime.toFixed();
+                if (lrcObj[curTime] != undefined && lrcObj[curTime] != "") {
+                    musiclrc.innerText = lrcObj[curTime];
+                }
+            }, 1000);
+
+            //心跳
+            setInterval(function () {
+                if (ws_connected) {
+                    websocket.send('{"type":"pong","data":"ping"}')
+                }
+            }, 40000)
+
+        }
+    }
+</script>
+</html>
