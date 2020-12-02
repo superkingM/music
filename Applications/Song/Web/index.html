@@ -2,25 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <title>测试</title>
 </head>
-<body>
-<!--<audio src="song/11.mp3" id="music" autoplay controls></audio>-->
-<audio src="" id="musicControl" autoplay controls ></audio>
-
-<!--<audio src="" id="addd" autoplay controls muted></audio>-->
-
-<div id="linkweb" onclick="connect()">连接服务器</div>
-<div id="lrcs">
+<body style="background-color:#263238;color: #ffffff">
+<div id="welcome"
+     style="position: fixed;width: 100%;height: 100%;top: 0px;left: 0px;z-index: 9999999;background: #263238;">
+        <span class="glyphicon glyphicon-play-circle"
+              style="font-size: 200px;position: fixed;top: calc(50% - 64px);left: calc(50% - 100px);cursor:pointer;color: #5bc0de"
+              onclick="connect();$('#welcome').fadeOut();">
+        </span>
+</div>
+<div class="container" style="margin-top: 100px">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-4">
+                <img src="pic/pic.jpg" id="musicpic" title="点击静音/取消静音" onclick="setPause()"
+                     style="cursor:pointer;transition-duration:0.2s;width: 90%;padding: 4px;border: 32px solid #151515;border-radius: 50%;background: rgb(191, 20, 20);margin-top: 5%;margin-left:5%;box-shadow:0px 0px 8px #000;"/>
+            </div>
+            <div class="col-md-8">
+                <div class="progress" style="height: 2px">
+                    <div id="played" class="progress-bar" role="progressbar" aria-valuemax="100"
+                         style="width: 90%;height: 2px">
+                    </div>
+                </div>
+                <div style="color: #ffffff;display: inline"><span id="usedtime" style="left: 0"></span></div>
+                <div style="color: #ffffff;display: inline"><span id="endtime"
+                                                                  style="position: absolute;right: 10px"></span></div>
+                <div style="color: #9acfea;font-weight: bold"><span>歌名：</span><span id="songname"></span></div>
+                <div style="color: #9acfea;font-weight: bold;"><span>歌词：</span><span id="musiclrc"></span></div>
+                <h4>待播歌曲</h4>
+                <div id="songlist"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h4>当前在线人数：<span id="online" style="color: #46b8da;font-weight: bold"></span></h4>
+            <h3>在线列表</h3>
+            <div style="height:200px;width:100%;overflow:auto;display: none" id="userlist"></div>
+            <div class="input-group" style="background-color:#263238;width: 30%;display: none" id="setsong">
+                <input type="text" id="picksong" class="form-control" placeholder="输入歌名"
+                       style="background-color:#263238;border: 1px solid #263238;color: #ffffff">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" onclick="song()"
+                            style="color: #ffffff;background-color:#263238">点歌</button>
+                    </span>
+            </div>
+            <div class="input-group" style="background-color:#263238;width: 30%;" id="setnick">
+                <input type="text" id="nick" class="form-control" placeholder="输入昵称"
+                       style="background-color:#263238;border: 1px solid #263238;color: #ffffff">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" onclick="nick()"
+                            style="color: #ffffff;background-color:#263238">设置</button>
+                    </span>
+            </div>
+            <div class="input-group" style="background-color:#263238;width: 30%;display: none" id="setmsg">
+                <input type="text" id="sendmsg" class="form-control" placeholder="输入聊天信息"
+                       style="background-color:#263238;border: 1px solid #263238;color: #ffffff">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" onclick="msg()"
+                            style="color: #ffffff;background-color:#263238">发送</button>
+                    </span>
+            </div>
+            <h4>聊天信息</h4>
+            <ul class="list-group" style="margin-top: 10px" id="chatlist">
+            </ul>
+        </div>
+    </div>
+    <audio src="" id="musicControl" autoplay></audio>
+    <!--style="width: 0px;height: 0px;opacity: 0;"-->
 </div>
 </body>
 <script src="js/jquery.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>
 <script>
-    // 配置
-    // var ws_hostname = 'ws://'+self.location.hostname+':811/';
-    var ws_hostname = 'ws://127.0.0.1:8282'
+    // var ws_hostname = 'ws://'+self.location.hostname+':8282/';
+    var ws_hostname = 'ws://127.0.0.1:8282/';
     var websocket
     var ws_connected = false
+    var paused = false
+    var rotate = 0;
+    var lrcObj = {};
 
     function connect() {
         websocket = new WebSocket(ws_hostname)
@@ -41,38 +102,122 @@
     }
 
     function music(data) {
-        musicControl.src = data.song
-        musicControl.currentTime = data.current
-        // addd.src = 'song/11.mp3'
-        // lrcs.innerHTML = data.lrc
-        // musicControl.load();
-        // musicControl.play();
+        musicControl.src = data.url
+        document.title = data.name
+        rotate = 0
+        musicControl.pause()
+        songname.innerHTML = data.name
+        musicControl.currentTime = data.current + 1
+        lrcObj = parseLyric(data.lrc)
+        setTimeout(function () {
+            musicControl.play()
+        }, 1000)
 
-        // console.log(data.song)
+
+    }
+
+    //设置昵称
+    function nick() {
+        var nick = $("#nick").val()
+        if (nick.length < 1) {
+            alert('请输入昵称')
+            return;
+        }
+        var nick = {
+            type: "nick",
+            data: nick
+        }
+        websocket.send(JSON.stringify(nick))
+        setTimeout(function () {
+            $('#setnick').fadeOut()
+            $('#userlist').fadeIn()
+            $('#setmsg').fadeIn()
+            $('#setsong').fadeIn()
+        }, 1000)
+
+    }
+
+    //点歌
+    function song() {
+        var song = $('#picksong').val()
+        if (song.length < 1) {
+            alert("请输入歌名")
+            return;
+        }
+
+        var pick = {
+            type: "picksong",
+            data: song
+        }
+
+        websocket.send(JSON.stringify(pick))
+        $('#picksong').val('')
+    }
+
+    //发送信息
+    function msg() {
+        var msg = $("#sendmsg").val()
+        if (msg.length < 1) {
+            alert("请输入信息")
+            return;
+        }
+        var msg = {
+            type: "msg",
+            data: msg
+        }
+        websocket.send(JSON.stringify(msg))
+        $("#sendmsg").val('')
     }
 
     function handle(data) {
         var json = JSON.parse(data);
-        // console.log(json)
         if (json.type != undefined) {
             switch (json.type) {
-                case"music":
+                case "music":
                     music(json)
                     break;
+                case "online":
+                    online.innerHTML = json.data
+                    break;
+                case "userlist":
+                    // console.log(json.data)
+                    userlist.innerHTML = json.data
+                    break;
+                case "msg":
+                    $('#chatlist').append('<li class="list-group-item" style="background-color: #263238">' + json.data + '</li>\n')
+                    break;
+                case "songlist":
+                    songlist.innerHTML = json.data
+                    break;
+                default:
+                    alert('未知错误')
+
+
             }
         }
     }
 
-
-    document.onreadystatechange = function () {
-        if (document.readyState == "complete") {
-            //心跳
-            setInterval(function () {
-                if (ws_connected) {
-                    websocket.send('{"type":"pong","data":"ping"}')
-                }
-            }, 5000)
+    // 转换时间格式
+    function formatSeconds(value) {
+        if (value == null || value == undefined) value = 0;
+        var secondTime = parseInt(value);
+        var minuteTime = 0;
+        var hourTime = 0;
+        if (secondTime > 60) {
+            minuteTime = parseInt(secondTime / 60);
+            secondTime = parseInt(secondTime % 60);
+            if (minuteTime > 60) {
+                hourTime = parseInt(minuteTime / 60);
+                minuteTime = parseInt(minuteTime % 60);
+            }
         }
+        secondTime = parseInt(secondTime);
+        minuteTime = parseInt(minuteTime);
+        hourTime = parseInt(hourTime);
+        if (secondTime < 10) secondTime = "0" + parseInt(secondTime);
+        if (minuteTime < 10) minuteTime = "0" + parseInt(minuteTime);
+        if (hourTime < 10) hourTime = "0" + parseInt(hourTime);
+        return hourTime + ":" + minuteTime + ":" + secondTime;
     }
 
     // 解析 Lrc 格式歌词
@@ -96,71 +241,38 @@
         return lrcObj;
     }
 
-    var lrc = "[ti:体面]\t\n" +
-        "[ar:于文文]\t\n" +
-        "[al:电影《前任3：再见前任》插曲]\t\n" +
-        "[by:果果1314]\t\n" +
-        "\n" +
-        "[00:00.00]于文文 - 体面\n" +
-        "[00:02.00]电影《前任3：再见前任》插曲\n" +
-        "[00:04.00]作词：唐恬\n" +
-        "[00:06.00]作曲：于文文\n" +
-        "[00:08.00]演唱：于文文\n" +
-        "[00:10.00]编曲：郑楠\n" +
-        "[00:12.00]和声&和声设计：于文文\n" +
-        "[00:14.00]]歌词编辑：果果\n" +
-        "[00:16.00]QQ:765708831\n" +
-        "[00:18.00]爱歌词网：www.22lrc.com\n" +
-        "[00:20.00]\n" +
-        "[00:23.00]别堆砌怀念让剧情变得狗血\n" +
-        "[00:34.03]深爱了多年又何必毁了经典\n" +
-        "[00:42.92]都已成年不拖不欠\n" +
-        "[00:48.67]浪费时间是我情愿\n" +
-        "[00:54.28]像谢幕的演员\n" +
-        "[00:57.79]眼看着灯光熄灭\n" +
-        "[01:05.43]来不及再轰轰烈烈\n" +
-        "[01:11.15]就保留告别的尊严\n" +
-        "[01:16.79]我爱你不后悔\n" +
-        "[01:20.36]也尊重故事结尾\n" +
-        "[01:28.13]分手应该体面\n" +
-        "[01:31.39]谁都不要说抱歉\n" +
-        "[01:35.06]何来亏欠\n" +
-        "[01:37.23]我敢给就敢心碎\n" +
-        "[01:40.83]镜头前面是\n" +
-        "[01:42.99]从前的我们在喝彩\n" +
-        "[01:47.15]流着泪声嘶力竭\n" +
-        "[01:50.83]离开也很体面\n" +
-        "[01:53.86]才没辜负这些年\n" +
-        "[01:57.62]爱得热烈\n" +
-        "[01:59.51]认真付出的画面\n" +
-        "[02:03.33]别让执念毁掉了昨天\n" +
-        "[02:07.99]我爱过你利落干脆\n" +
-        "[02:12.48]\n" +
-        "[02:35.42]最熟悉的街主角却换了人演\n" +
-        "[02:46.95]我哭到哽咽\n" +
-        "[02:48.99]心再痛就当破茧\n" +
-        "[02:55.73]来不及再轰轰烈烈\n" +
-        "[03:01.35]就保留告别的尊严\n" +
-        "[03:06.99]我爱你不后悔\n" +
-        "[03:10.92]也尊重故事结尾\n" +
-        "[03:18.39]分手应该体面\n" +
-        "[03:21.52]谁都不要说抱歉\n" +
-        "[03:25.31]何来亏欠\n" +
-        "[03:27.12]我敢给就敢心碎\n" +
-        "[03:30.88]镜头前面是\n" +
-        "[03:33.13]从前的我们在喝彩\n" +
-        "[03:36.83]流着泪声嘶力竭\n" +
-        "[03:41.01]离开也很体面\n" +
-        "[03:43.92]才没辜负这些年爱得热烈\n" +
-        "[03:49.79]认真付出的画面\n" +
-        "[03:53.54]别让执念毁掉了昨天\n" +
-        "[03:58.26]我爱过你利落干脆\n" +
-        "[04:04.20]再见不负遇见\n" +
-        "[04:11.08]\n" +
-        "[10:00.00]LRC歌词下载：www.22lrc.com \n"
+    document.onreadystatechange = function () {
+        if (document.readyState == 'complete') {
+            //封面旋转
+            setInterval(function () {
+                if (!paused) {
+                    rotate = rotate + 1;
+                    musicpic.style.transform = "rotate(" + rotate + "deg)";
+                }
 
+            }, 100);
+            //歌曲时间
+            setInterval(function () {
+                played.style.width = ((musicControl.currentTime / musicControl.duration) * 100) + "%";
+                usedtime.innerText = formatSeconds(musicControl.currentTime);
+                endtime.innerText = formatSeconds(musicControl.duration - musicControl.currentTime);
+            }, 100);
+            //歌词
+            setInterval(function () {
+                var curTime = musicControl.currentTime.toFixed();
+                if (lrcObj[curTime] != undefined && lrcObj[curTime] != "") {
+                    musiclrc.innerText = lrcObj[curTime];
+                }
+            }, 1000);
 
-    // var tt = parseLyric(lrc)
-    // console.log(tt)
+            //心跳
+            setInterval(function () {
+                if (ws_connected) {
+                    websocket.send('{"type":"pong","data":"ping"}')
+                }
+            }, 40000)
+
+        }
+    }
 </script>
 </html>

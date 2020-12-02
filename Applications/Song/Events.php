@@ -32,11 +32,13 @@ class Events
     public static function onWorkerStart($worker)
     {
         if ($worker->name == "SongBusinessWorker") {
+            //歌曲播放进度检测
             \Workerman\Timer::add(1, function () {
                 $song = \Conlink\Song::taskSong();
                 if ($song) {
                     $song = json_encode($song, JSON_UNESCAPED_UNICODE);
                     Gateway::sendToAll($song);
+                    \Conlink\Song::songList();
                 }
 
             });
@@ -55,6 +57,9 @@ class Events
         $currentSong = \Conlink\Song::open();
         $music = json_encode($currentSong, JSON_UNESCAPED_UNICODE);
         Gateway::sendToClient($client_id, $music);
+        \Conlink\Song::onlineCount();
+        \Conlink\Song::onlineList();
+        \Conlink\Song::songList();
     }
 
     /**
@@ -69,7 +74,7 @@ class Events
         // 向所有人发送 
 //        Gateway::sendToAll("$client_id said $message\r\n");
         if (is_callable($msgContro)) {
-            call_user_func_array($msgContro, [$msg['data']]);
+            call_user_func_array($msgContro, [$client_id,$msg['data']]);
         }
 
     }
@@ -80,7 +85,7 @@ class Events
      */
     public static function onClose($client_id)
     {
-        // 向所有人发送
-        GateWay::sendToAll("$client_id logout\r\n");
+        \Conlink\Song::onlineCount();
+        \Conlink\Song::onlineList();
     }
 }
