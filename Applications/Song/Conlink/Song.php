@@ -125,9 +125,9 @@ class Song
             foreach ($songList as $song) {
                 $str = $str . '<br>' . $song['name'];
             }
-            $data = json_encode(['type' => 'songlist', 'data' => $str], JSON_UNESCAPED_UNICODE);
-            Gateway::sendToAll($data);
         }
+        $data = json_encode(['type' => 'songlist', 'data' => $str], JSON_UNESCAPED_UNICODE);
+        Gateway::sendToAll($data);
     }
 
     /**
