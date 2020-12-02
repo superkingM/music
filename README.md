@@ -2,7 +2,7 @@ Music
 ============
 使用PHP workerman开发的在线同步点歌台，支持在线聊天和自由点歌
 
-![在这里插入图片描述](https://github.com/superkingM/music/tree/main/Applications/Song/Web/pic/view.png)
+![image](https://github.com/superkingM/music/blob/main/Applications/Song/Web/pic/view.png)
 
 使用控制器-》方法的形式去处理websocket客户端消息
 
