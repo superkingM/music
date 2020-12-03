@@ -62,6 +62,7 @@ class Events
      */
     public static function onConnect($client_id)
     {
+        \Conlink\Song::pauseSong();//在初始化歌曲之前更新歌曲状态
         $currentSong = \Conlink\Song::open();
         $music = json_encode($currentSong, JSON_UNESCAPED_UNICODE);
         Gateway::sendToClient($client_id, $music);
