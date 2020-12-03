@@ -39,6 +39,7 @@
             <h4>当前在线人数：<span id="online" style="color: #46b8da;font-weight: bold"></span></h4>
             <h3>在线列表</h3>
             <div style="height:200px;width:100%;overflow:auto;display: none" id="userlist"></div>
+            <h5>发送切歌可已经进行切歌申请，超过在线人数1/3会自动切歌</h5>
             <div class="input-group" style="background-color:#263238;width: 30%;display: none" id="setsong">
                 <input type="text" id="picksong" class="form-control" placeholder="输入歌名"
                        style="background-color:#263238;border: 1px solid #263238;color: #ffffff">
@@ -188,6 +189,9 @@
                     break;
                 case "songlist":
                     songlist.innerHTML = json.data
+                    break;
+                case "tips":
+                    alert(json.data)
                     break;
                 default:
                     alert('未知错误')

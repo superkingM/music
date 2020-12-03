@@ -42,6 +42,14 @@ class Events
                 }
 
             });
+            //删除过期切歌记录
+            \Workerman\Timer::add(5, function () {
+                \Conlink\Song::deleteSong();
+            });
+            //检测在线，无人在线暂停
+            \Workerman\Timer::add(1,function (){
+               \Conlink\Song::pauseSong();
+            });
         }
     }
 
@@ -74,7 +82,7 @@ class Events
         // 向所有人发送 
 //        Gateway::sendToAll("$client_id said $message\r\n");
         if (is_callable($msgContro)) {
-            call_user_func_array($msgContro, [$client_id,$msg['data']]);
+            call_user_func_array($msgContro, [$client_id, $msg['data']]);
         }
 
     }
@@ -87,5 +95,6 @@ class Events
     {
         \Conlink\Song::onlineCount();
         \Conlink\Song::onlineList();
+        \Conlink\Song::deleteUserSong($client_id);
     }
 }

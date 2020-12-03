@@ -52,7 +52,7 @@ class Song
     public static function taskSong()
     {
         $db = Db::instance('sdb');
-        $currentSong = $db->select('*')->from('current')->row();
+        $currentSong = $db->select('*')->from('current')->where("status=1")->row();
         $songList = $db->select('*')->from('song_list')->row();
         if ($currentSong) {
             $time = $currentSong['end'] - time();
@@ -116,10 +116,14 @@ class Song
         Gateway::sendToAll($data);
     }
 
+    /**
+     * 待播放列表
+     * @throws \Exception
+     */
     public static function songList()
     {
         $db = Db::instance('sdb');
-        $songList = $db->select('*')->from('song_list')->query();
+        $songList = $db->select('*')->from('song_list')->orderByASC(['id'])->query();
         $str = '';
         if (count($songList) > 0) {
             foreach ($songList as $song) {
@@ -150,4 +154,48 @@ class Song
         return $end;
 
     }
+
+    /**
+     * 删除当前用户切歌记录
+     */
+    public static function deleteUserSong($client_id)
+    {
+        $db = Db::instance('sdb');
+        $db->delete('change_song')->where("client_id='{$client_id}'")->query();
+    }
+
+    /**
+     * 删除不是当前歌曲的点歌记录
+     * @throws \Exception
+     */
+    public static function deleteSong()
+    {
+        $db = Db::instance('sdb');
+        $current = $db->select('*')->from('current')->row();
+        $db->delete('change_song')->where("current_id<>{$current['id']}")->query();
+    }
+
+    /**
+     * 无人在线歌曲暂停
+     */
+    public static function pauseSong()
+    {
+        $online = Gateway::getAllClientIdCount();
+        $db = Db::instance('sdb');
+        $current = $db->select('*')->from('current')->row();
+        if ($online < 1) {
+            if ($current['status']==1){
+                $currentTime = time() - $current['start'];
+                $db->update('current')->cols(['current' => $currentTime, 'status' => 2])->where("id={$current['id']}")->query();
+            }
+        } else {
+           if ($current['status']==2){
+               $startTime = time()-$current['current'];
+               $endTime = $startTime+self::getSongTime($current['url']);
+               $db->update('current')->cols(['start'=>$startTime,'end'=>$endTime,'status'=>1])->where("id={$current['id']}")->query();
+           }
+        }
+    }
+
+
 }

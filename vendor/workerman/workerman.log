@@ -93,3 +93,278 @@ Stack trace:
 #10 C:\Users\chaow\Downloads\music\Applications\Song\start_businessworker.php(35): Workerman\Worker::runAll()
 #11 {main}
 2020-12-01 06:56:00 pid:1 Worker process terminated
+2020-12-02 05:34:32 pid:1 Exception: You can't send(NULL) to client, you need to convert it to a string.  in E:\music\vendor\workerman\workerman\Protocols\Websocket.php:236
+Stack trace:
+#0 E:\music\vendor\workerman\workerman\Connection\TcpConnection.php(344): Workerman\Protocols\Websocket::encode(NULL, Object(Workerman\Connection\TcpConnection))
+#1 E:\music\vendor\workerman\gateway-worker\src\Gateway.php(614): Workerman\Connection\TcpConnection->send(NULL, false)
+#2 E:\music\vendor\workerman\workerman\Connection\TcpConnection.php(660): GatewayWorker\Gateway->onWorkerMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 E:\music\vendor\workerman\workerman\Events\Select.php(293): Workerman\Connection\TcpConnection->baseRead(Resource id #34)
+#4 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#5 E:\music\vendor\workerman\gateway-worker\src\Gateway.php(276): Workerman\Worker->run()
+#6 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\Gateway->run()
+#7 E:\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#8 E:\music\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#9 E:\music\Applications\Song\start_gateway.php(63): Workerman\Worker::runAll()
+#10 {main}
+2020-12-02 05:34:32 pid:1 Worker process terminated
+2020-12-02 05:34:33 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught Exception: businessWorker::getAllGatewayAddresses return empty in E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php:732
+Stack trace:
+#0 E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php(710): GatewayWorker\Lib\Gateway::getAllGatewayAddress()
+#1 E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php(659): GatewayWorker\Lib\Gateway::getBufferFromAllGateway(Array)
+#2 E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php(355): GatewayWorker\Lib\Gateway::select(Array)
+#3 E:\music\Applications\Song\Events.php(54): GatewayWorker\Lib\Gateway::getAllClientIdList()
+#4 E:\music\vendor\workerman\workerman\Events\Select.php(232): Events::{closure}()
+#5 E:\music\vendor\workerman\workerman\Events\Select.php(281): Workerman\Events\Select->tick()
+#6 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#7 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#8 E:\music\vendor\workerman\workerman\Worker.php(1404 in E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php on line 732"
+2020-12-02 05:34:35 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught Exception: businessWorker::getAllGatewayAddresses return empty in E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php:732
+Stack trace:
+#0 E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php(710): GatewayWorker\Lib\Gateway::getAllGatewayAddress()
+#1 E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php(300): GatewayWorker\Lib\Gateway::getBufferFromAllGateway(Array)
+#2 E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php(319): GatewayWorker\Lib\Gateway::getClientIdCountByGroup('')
+#3 E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php(275): GatewayWorker\Lib\Gateway::getClientCountByGroup()
+#4 E:\music\Applications\Song\Events.php(46): GatewayWorker\Lib\Gateway::getAllClientIdCount()
+#5 E:\music\vendor\workerman\workerman\Events\Select.php(232): Events::{closure}()
+#6 E:\music\vendor\workerman\workerman\Events\Select.php(281): Workerman\Events\Select->tick()
+#7 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#8 E:\music\ven in E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php on line 732"
+2020-12-02 05:34:50 pid:1 Exception: You can't send(NULL) to client, you need to convert it to a string.  in E:\music\vendor\workerman\workerman\Protocols\Websocket.php:236
+Stack trace:
+#0 E:\music\vendor\workerman\workerman\Connection\TcpConnection.php(344): Workerman\Protocols\Websocket::encode(NULL, Object(Workerman\Connection\TcpConnection))
+#1 E:\music\vendor\workerman\gateway-worker\src\Gateway.php(614): Workerman\Connection\TcpConnection->send(NULL, false)
+#2 E:\music\vendor\workerman\workerman\Connection\TcpConnection.php(660): GatewayWorker\Gateway->onWorkerMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 E:\music\vendor\workerman\workerman\Events\Select.php(293): Workerman\Connection\TcpConnection->baseRead(Resource id #34)
+#4 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#5 E:\music\vendor\workerman\gateway-worker\src\Gateway.php(276): Workerman\Worker->run()
+#6 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\Gateway->run()
+#7 E:\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#8 E:\music\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#9 E:\music\Applications\Song\start_gateway.php(63): Workerman\Worker::runAll()
+#10 {main}
+2020-12-02 05:34:50 pid:1 Worker process terminated
+2020-12-02 05:34:51 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught Exception: businessWorker::getAllGatewayAddresses return empty in E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php:732
+Stack trace:
+#0 E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php(710): GatewayWorker\Lib\Gateway::getAllGatewayAddress()
+#1 E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php(659): GatewayWorker\Lib\Gateway::getBufferFromAllGateway(Array)
+#2 E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php(355): GatewayWorker\Lib\Gateway::select(Array)
+#3 E:\music\Applications\Song\Events.php(54): GatewayWorker\Lib\Gateway::getAllClientIdList()
+#4 E:\music\vendor\workerman\workerman\Events\Select.php(232): Events::{closure}()
+#5 E:\music\vendor\workerman\workerman\Events\Select.php(281): Workerman\Events\Select->tick()
+#6 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#7 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#8 E:\music\vendor\workerman\workerman\Worker.php(1404 in E:\music\vendor\workerman\gateway-worker\src\Lib\Gateway.php on line 732"
+2020-12-02 07:10:24 pid:1 Error: Class 'Conlink\Gateway' not found in E:\music\Applications\Song\Conlink\Song.php:83
+Stack trace:
+#0 E:\music\Applications\Song\Events.php(84): Conlink\Song::onlineCount()
+#1 [internal function]: Events::onConnect('7f0000010b54000...')
+#2 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(399): call_user_func('Events::onConne...', '7f0000010b54000...')
+#3 E:\music\vendor\workerman\workerman\Connection\TcpConnection.php(660): GatewayWorker\BusinessWorker->onGatewayMessage(Object(Workerman\Connection\AsyncTcpConnection), Array)
+#4 E:\music\vendor\workerman\workerman\Events\Select.php(293): Workerman\Connection\TcpConnection->baseRead(Resource id #28)
+#5 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#6 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#7 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#8 E:\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#9 E:\music\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#10 E:\music\Applications\Song\start_businessworker.php(35): Workerman\Worker::runAll()
+#11 {main}
+2020-12-02 07:10:24 pid:1 Worker process terminated
+2020-12-02 07:43:40 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:41 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:42 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:43 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:44 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:45 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:46 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:47 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:48 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:49 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:50 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:51 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:52 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:53 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:54 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:55 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:56 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-02 07:43:57 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:SongBusinessWorker:0
+2020-12-03 03:30:57 pid:1 PDOException: SQL:SELECT * FROM `change_song` WHERE client_id=7f0000010b5400000001 SQLSTATE[42S22]: Column not found: 1054 Unknown column '7f0000010b5400000001' in 'where clause' in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php:1766
+Stack trace:
+#0 E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php(1894): GatewayWorker\Lib\DbConnection->execute('SELECT * FROM `...', Array)
+#1 E:\music\Applications\Song\Controller\MsgController.php(121): GatewayWorker\Lib\DbConnection->row()
+#2 E:\music\Applications\Song\Controller\MsgController.php(38): Controller\MsgController::changeSong('7f0000010b54000...')
+#3 E:\music\Applications\Song\Events.php(77): Controller\MsgController::msg('7f0000010b54000...', '\xE5\x88\x87\xE6\xAD\x8C')
+#4 [internal function]: Events::onMessage('7f0000010b54000...', '{"type":"msg","...')
+#5 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(404): call_user_func('Events::onMessa...', '7f0000010b54000...', '{"type":"msg","...')
+#6 E:\music\vendor\workerman\workerman\Connection\TcpConnection.php(660): GatewayWorker\BusinessWorker->onGatewayMessage(Object(Workerman\Connection\AsyncTcpConnection), Array)
+#7 E:\music\vendor\workerman\workerman\Events\Select.php(293): Workerman\Connection\TcpConnection->baseRead(Resource id #28)
+#8 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#9 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#10 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#11 E:\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#12 E:\music\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#13 E:\music\Applications\Song\start_businessworker.php(35): Workerman\Worker::runAll()
+#14 {main}
+2020-12-03 03:30:57 pid:1 Worker process terminated
+2020-12-03 03:34:01 pid:1 PDOException: SQL:SELECT * FROM `change_song` WHERE client_id=`7f0000010b5400000001` SQLSTATE[42S22]: Column not found: 1054 Unknown column '7f0000010b5400000001' in 'where clause' in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php:1766
+Stack trace:
+#0 E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php(1894): GatewayWorker\Lib\DbConnection->execute('SELECT * FROM `...', Array)
+#1 E:\music\Applications\Song\Controller\MsgController.php(121): GatewayWorker\Lib\DbConnection->row()
+#2 E:\music\Applications\Song\Controller\MsgController.php(38): Controller\MsgController::changeSong('7f0000010b54000...')
+#3 E:\music\Applications\Song\Events.php(77): Controller\MsgController::msg('7f0000010b54000...', '\xE5\x88\x87\xE6\xAD\x8C')
+#4 [internal function]: Events::onMessage('7f0000010b54000...', '{"type":"msg","...')
+#5 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(404): call_user_func('Events::onMessa...', '7f0000010b54000...', '{"type":"msg","...')
+#6 E:\music\vendor\workerman\workerman\Connection\TcpConnection.php(660): GatewayWorker\BusinessWorker->onGatewayMessage(Object(Workerman\Connection\AsyncTcpConnection), Array)
+#7 E:\music\vendor\workerman\workerman\Events\Select.php(293): Workerman\Connection\TcpConnection->baseRead(Resource id #28)
+#8 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#9 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#10 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#11 E:\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#12 E:\music\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#13 E:\music\Applications\Song\start_businessworker.php(35): Workerman\Worker::runAll()
+#14 {main}
+2020-12-03 03:34:01 pid:1 Worker process terminated
+2020-12-03 03:39:43 pid:1 PDOException: SQL:SELECT * FROM `change_song` WHERE song_id=115 SQLSTATE[42S22]: Column not found: 1054 Unknown column 'song_id' in 'where clause' in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php:1766
+Stack trace:
+#0 E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php(1824): GatewayWorker\Lib\DbConnection->execute('SELECT * FROM `...', Array)
+#1 E:\music\Applications\Song\Controller\MsgController.php(125): GatewayWorker\Lib\DbConnection->query()
+#2 E:\music\Applications\Song\Controller\MsgController.php(38): Controller\MsgController::changeSong('7f0000010b54000...')
+#3 E:\music\Applications\Song\Events.php(77): Controller\MsgController::msg('7f0000010b54000...', '\xE5\x88\x87\xE6\xAD\x8C')
+#4 [internal function]: Events::onMessage('7f0000010b54000...', '{"type":"msg","...')
+#5 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(404): call_user_func('Events::onMessa...', '7f0000010b54000...', '{"type":"msg","...')
+#6 E:\music\vendor\workerman\workerman\Connection\TcpConnection.php(660): GatewayWorker\BusinessWorker->onGatewayMessage(Object(Workerman\Connection\AsyncTcpConnection), Array)
+#7 E:\music\vendor\workerman\workerman\Events\Select.php(293): Workerman\Connection\TcpConnection->baseRead(Resource id #28)
+#8 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#9 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#10 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#11 E:\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#12 E:\music\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#13 E:\music\Applications\Song\start_businessworker.php(35): Workerman\Worker::runAll()
+#14 {main}
+2020-12-03 03:39:43 pid:1 Worker process terminated
+2020-12-03 05:32:08 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught PDOException: SQL:DELETE FROM `chang_song` WHERE current_id<>141 SQLSTATE[42S02]: Base table or view not found: 1146 Table 'song.chang_song' doesn't exist in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php:1766
+Stack trace:
+#0 E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php(1824): GatewayWorker\Lib\DbConnection->execute('DELETE FROM `ch...', Array)
+#1 E:\music\Applications\Song\Conlink\Song.php(169): GatewayWorker\Lib\DbConnection->query()
+#2 E:\music\Applications\Song\Events.php(47): Conlink\Song::deleteSong()
+#3 E:\music\vendor\workerman\workerman\Events\Select.php(232): Events::{closure}()
+#4 E:\music\vendor\workerman\workerman\Events\Select.php(281): Workerman\Events\Select->tick()
+#5 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#6 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#7 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#8 E: in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php on line 1766"
+2020-12-03 05:32:14 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught PDOException: SQL:DELETE FROM `chang_song` WHERE current_id<>141 SQLSTATE[42S02]: Base table or view not found: 1146 Table 'song.chang_song' doesn't exist in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php:1766
+Stack trace:
+#0 E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php(1824): GatewayWorker\Lib\DbConnection->execute('DELETE FROM `ch...', Array)
+#1 E:\music\Applications\Song\Conlink\Song.php(169): GatewayWorker\Lib\DbConnection->query()
+#2 E:\music\Applications\Song\Events.php(47): Conlink\Song::deleteSong()
+#3 E:\music\vendor\workerman\workerman\Events\Select.php(232): Events::{closure}()
+#4 E:\music\vendor\workerman\workerman\Events\Select.php(281): Workerman\Events\Select->tick()
+#5 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#6 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#7 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#8 E: in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php on line 1766"
+2020-12-03 05:32:20 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught PDOException: SQL:DELETE FROM `chang_song` WHERE current_id<>141 SQLSTATE[42S02]: Base table or view not found: 1146 Table 'song.chang_song' doesn't exist in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php:1766
+Stack trace:
+#0 E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php(1824): GatewayWorker\Lib\DbConnection->execute('DELETE FROM `ch...', Array)
+#1 E:\music\Applications\Song\Conlink\Song.php(169): GatewayWorker\Lib\DbConnection->query()
+#2 E:\music\Applications\Song\Events.php(47): Conlink\Song::deleteSong()
+#3 E:\music\vendor\workerman\workerman\Events\Select.php(232): Events::{closure}()
+#4 E:\music\vendor\workerman\workerman\Events\Select.php(281): Workerman\Events\Select->tick()
+#5 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#6 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#7 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#8 E: in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php on line 1766"
+2020-12-03 05:32:26 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught PDOException: SQL:DELETE FROM `chang_song` WHERE current_id<>141 SQLSTATE[42S02]: Base table or view not found: 1146 Table 'song.chang_song' doesn't exist in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php:1766
+Stack trace:
+#0 E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php(1824): GatewayWorker\Lib\DbConnection->execute('DELETE FROM `ch...', Array)
+#1 E:\music\Applications\Song\Conlink\Song.php(169): GatewayWorker\Lib\DbConnection->query()
+#2 E:\music\Applications\Song\Events.php(47): Conlink\Song::deleteSong()
+#3 E:\music\vendor\workerman\workerman\Events\Select.php(232): Events::{closure}()
+#4 E:\music\vendor\workerman\workerman\Events\Select.php(281): Workerman\Events\Select->tick()
+#5 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#6 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#7 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#8 E: in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php on line 1766"
+2020-12-03 05:32:32 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught PDOException: SQL:DELETE FROM `chang_song` WHERE current_id<>141 SQLSTATE[42S02]: Base table or view not found: 1146 Table 'song.chang_song' doesn't exist in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php:1766
+Stack trace:
+#0 E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php(1824): GatewayWorker\Lib\DbConnection->execute('DELETE FROM `ch...', Array)
+#1 E:\music\Applications\Song\Conlink\Song.php(169): GatewayWorker\Lib\DbConnection->query()
+#2 E:\music\Applications\Song\Events.php(47): Conlink\Song::deleteSong()
+#3 E:\music\vendor\workerman\workerman\Events\Select.php(232): Events::{closure}()
+#4 E:\music\vendor\workerman\workerman\Events\Select.php(281): Workerman\Events\Select->tick()
+#5 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#6 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#7 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#8 E: in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php on line 1766"
+2020-12-03 05:32:38 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught PDOException: SQL:DELETE FROM `chang_song` WHERE current_id<>141 SQLSTATE[42S02]: Base table or view not found: 1146 Table 'song.chang_song' doesn't exist in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php:1766
+Stack trace:
+#0 E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php(1824): GatewayWorker\Lib\DbConnection->execute('DELETE FROM `ch...', Array)
+#1 E:\music\Applications\Song\Conlink\Song.php(169): GatewayWorker\Lib\DbConnection->query()
+#2 E:\music\Applications\Song\Events.php(47): Conlink\Song::deleteSong()
+#3 E:\music\vendor\workerman\workerman\Events\Select.php(232): Events::{closure}()
+#4 E:\music\vendor\workerman\workerman\Events\Select.php(281): Workerman\Events\Select->tick()
+#5 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#6 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#7 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#8 E: in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php on line 1766"
+2020-12-03 05:40:34 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught TypeError: Argument 1 passed to GatewayWorker\Lib\DbConnection::orderByASC() must be of the type array, string given, called in E:\music\Applications\Song\Conlink\Song.php on line 122 and defined in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php:1033
+Stack trace:
+#0 E:\music\Applications\Song\Conlink\Song.php(122): GatewayWorker\Lib\DbConnection->orderByASC('id')
+#1 E:\music\Applications\Song\Events.php(41): Conlink\Song::songList()
+#2 E:\music\vendor\workerman\workerman\Events\Select.php(232): Events::{closure}()
+#3 E:\music\vendor\workerman\workerman\Events\Select.php(281): Workerman\Events\Select->tick()
+#4 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#5 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#6 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#7 E:\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#8  in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php on line 1033"
+2020-12-03 05:40:39 pid:1 TypeError: Argument 1 passed to GatewayWorker\Lib\DbConnection::orderByASC() must be of the type array, string given, called in E:\music\Applications\Song\Conlink\Song.php on line 122 and defined in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php:1033
+Stack trace:
+#0 E:\music\Applications\Song\Conlink\Song.php(122): GatewayWorker\Lib\DbConnection->orderByASC('id')
+#1 E:\music\Applications\Song\Events.php(66): Conlink\Song::songList()
+#2 [internal function]: Events::onConnect('7f0000010b54000...')
+#3 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(399): call_user_func('Events::onConne...', '7f0000010b54000...')
+#4 E:\music\vendor\workerman\workerman\Connection\TcpConnection.php(660): GatewayWorker\BusinessWorker->onGatewayMessage(Object(Workerman\Connection\AsyncTcpConnection), Array)
+#5 E:\music\vendor\workerman\workerman\Events\Select.php(293): Workerman\Connection\TcpConnection->baseRead(Resource id #28)
+#6 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#7 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#8 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#9 E:\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#10 E:\music\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#11 E:\music\Applications\Song\start_businessworker.php(35): Workerman\Worker::runAll()
+#12 {main}
+2020-12-03 05:40:39 pid:1 Worker process terminated
+2020-12-03 05:40:49 pid:1 TypeError: Argument 1 passed to GatewayWorker\Lib\DbConnection::orderByASC() must be of the type array, string given, called in E:\music\Applications\Song\Conlink\Song.php on line 122 and defined in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php:1033
+Stack trace:
+#0 E:\music\Applications\Song\Conlink\Song.php(122): GatewayWorker\Lib\DbConnection->orderByASC('id')
+#1 E:\music\Applications\Song\Controller\MsgController.php(94): Conlink\Song::songList()
+#2 E:\music\Applications\Song\Events.php(81): Controller\MsgController::picksong('7f0000010b54000...', '\xE6\x9B\xB9\xE6\x93\x8D')
+#3 [internal function]: Events::onMessage('7f0000010b54000...', '{"type":"pickso...')
+#4 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(404): call_user_func('Events::onMessa...', '7f0000010b54000...', '{"type":"pickso...')
+#5 E:\music\vendor\workerman\workerman\Connection\TcpConnection.php(660): GatewayWorker\BusinessWorker->onGatewayMessage(Object(Workerman\Connection\AsyncTcpConnection), Array)
+#6 E:\music\vendor\workerman\workerman\Events\Select.php(293): Workerman\Connection\TcpConnection->baseRead(Resource id #28)
+#7 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#8 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#9 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#10 E:\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#11 E:\music\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#12 E:\music\Applications\Song\start_businessworker.php(35): Workerman\Worker::runAll()
+#13 {main}
+2020-12-03 05:40:49 pid:1 Worker process terminated
+2020-12-03 05:40:56 pid:1 TypeError: Argument 1 passed to GatewayWorker\Lib\DbConnection::orderByASC() must be of the type array, string given, called in E:\music\Applications\Song\Conlink\Song.php on line 122 and defined in E:\music\vendor\workerman\gateway-worker\src\Lib\DbConnection.php:1033
+Stack trace:
+#0 E:\music\Applications\Song\Conlink\Song.php(122): GatewayWorker\Lib\DbConnection->orderByASC('id')
+#1 E:\music\Applications\Song\Controller\MsgController.php(94): Conlink\Song::songList()
+#2 E:\music\Applications\Song\Events.php(81): Controller\MsgController::picksong('7f0000010b54000...', '\xE6\xB1\x9F\xE5\x8D\x97')
+#3 [internal function]: Events::onMessage('7f0000010b54000...', '{"type":"pickso...')
+#4 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(404): call_user_func('Events::onMessa...', '7f0000010b54000...', '{"type":"pickso...')
+#5 E:\music\vendor\workerman\workerman\Connection\TcpConnection.php(660): GatewayWorker\BusinessWorker->onGatewayMessage(Object(Workerman\Connection\AsyncTcpConnection), Array)
+#6 E:\music\vendor\workerman\workerman\Events\Select.php(293): Workerman\Connection\TcpConnection->baseRead(Resource id #28)
+#7 E:\music\vendor\workerman\workerman\Worker.php(2408): Workerman\Events\Select->loop()
+#8 E:\music\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#9 E:\music\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#10 E:\music\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#11 E:\music\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#12 E:\music\Applications\Song\start_businessworker.php(35): Workerman\Worker::runAll()
+#13 {main}
+2020-12-03 05:40:56 pid:1 Worker process terminated
