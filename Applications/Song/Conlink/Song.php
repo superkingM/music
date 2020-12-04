@@ -9,6 +9,7 @@
 namespace Conlink;
 
 
+use Config\RandSong;
 use GatewayWorker\Lib\Db;
 use GatewayWorker\Lib\Gateway;
 
@@ -24,8 +25,13 @@ class Song
     {
         $db = Db::instance('sdb');
         $currentSong = $db->select('*')->from('current')->row();
+        $songRand=RandSong::$songs;//song_id
+        $randPick = array_rand($songRand);
         if (!$currentSong) {
-            $getSong = $db->select('*')->from('songs')->row();
+            $getSong = $db->select('*')->from('songs')->where("song_id={$songRand[$randPick]}")->row();
+            if (!$getSong){
+                $getSong = $db->select('*')->from('songs')->orderByDESC(['id'])->row();
+            }
             $end = self::getSongTime($getSong['url']);
             $currentSong = [
                 'name' => $getSong['name'],
