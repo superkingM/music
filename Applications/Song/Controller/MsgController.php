@@ -56,44 +56,31 @@ class MsgController
      * 点歌
      * @param $client_id
      * @param $data
+     * @return void
+     * @throws \Exception
      */
     public static function picksong($client_id, $data)
     {
-        $name = self::getNick($client_id);
-        $songNameHttp = "https://cdn.zerodream.net/netease/api.php?source=netease&types=search&name={$data}&count=10&pages=1";
-        $songId = file_get_contents($songNameHttp);
-        $songId = json_decode($songId, true);
-        $songName = $songId[0]['name'];
-        $songId = $songId[0]['id'];
-
         $db = Db::instance('sdb');
-        $song = $db->select('*')->from('songs')->where("song_id={$songId}")->row();
-        $songList = $db->select('*')->from('song_list')->where("song_id={$songId}")->row();
-        if (!$song) {
-            $songIdHttp = 'https://cdn.zerodream.net/netease/api.php?source=netease&types=url&id=' . $songId;
-            $songUrl = json_decode(file_get_contents($songIdHttp), true)['url'];
-            $filepath = getcwd() . '/Applications/Song/Web/song/' . $songName . '.mp3';
-            $songData = file_get_contents($songUrl);
-            file_put_contents($filepath, $songData);
-            $songLrcHttp = 'https://music.163.com/api/song/lyric?os=pc&lv=-1&id=' . $songId;
-            $songLrc = json_decode(file_get_contents($songLrcHttp), true);
-            $songLrc = isset($songLrc['lrc']['lyric']) ? $songLrc['lrc']['lyric'] : '';
-            $db->insert('songs')->cols(['name' => $songName, 'url' => 'song/' . $songName . '.mp3', 'lrc' => $songLrc, 'song_id' => $songId])->query();
-            if (!$songList) {
-                $db->insert('song_list')->cols(['name' => $songName, 'url' => 'song/' . $songName . '.mp3', 'lrc' => $songLrc, 'song_id' => $songId])->query();
-            }
-        } else {
-            if (!$songList) {
-                $db->insert('song_list')->cols(['name' => $song['name'], 'url' => $song['url'], 'lrc' => $song['lrc'], 'song_id' => $song['song_id']])->query();
+        $song = $db->row("SELECT * FROM `songs` WHERE name like '%{$data}%' ");
+        if ($song !== false) {
+            $songList = $db->row("SELECT * FROM `song_list` WHERE name='{$song['name']}'");
+            if ($songList === false) {
+                $db->insert('song_list')
+                    ->cols([
+                        'name' => $song['name'],
+                        'url' => $song['url'],
+                        'lrc' => $song['lrc'],
+                        'song_id' => $song['song_id']
+                    ])
+                    ->query();
             } else {
                 Gateway::sendToClient($client_id, '{"type":"tips","data":"点歌失败列表已经存在"}');
             }
+        } else {
+            Gateway::sendToClient($client_id, '{"type":"tips","data":"此歌曲不存在，目前只有默认歌曲有：飞鸟和蝉、江南、曹操、小跳蛙"}');
         }
-
-
         Song::songList();
-
-
     }
 
     /**
